@@ -53,14 +53,37 @@
   <p id="loginMessage"></p>
 </div>
 
-<!-- Admin Comic Editor -->
+</div><!-- Admin Comic Editor -->
 <div class="admin-area" id="adminDiv" style="display:none;">
   <h2>Add Your Comic</h2>
   <input type="text" id="comicTitle" placeholder="Comic Title"><br>
   <textarea id="comicContent" placeholder="Comic content" rows="4" cols="40"></textarea><br>
-  <button class="button" onclick="addComic()">Add Comic</button>
+  <button class="button" id="addComicBtn">Add Comic</button>
   <div id="comics"></div>
 </div>
+
+<script>
+  const addBtn = document.getElementById('addComicBtn');
+  const comicList = document.getElementById('comics');
+
+  addBtn.addEventListener('click', () => {
+    const title = document.getElementById('comicTitle').value.trim();
+    const content = document.getElementById('comicContent').value.trim();
+    if(title && content){
+      const div = document.createElement('div');
+      div.style.background = 'rgba(255,255,255,0.05)';
+      div.style.padding = '10px';
+      div.style.margin = '10px';
+      div.style.borderRadius = '8px';
+      div.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
+      comicList.appendChild(div);
+      document.getElementById('comicTitle').value = '';
+      document.getElementById('comicContent').value = '';
+    } else {
+      alert('You need to enter a title AND content!');
+    }
+  });
+</script>
 
 <p>Made by TheGriminator — hope you liked it!</p>
 
