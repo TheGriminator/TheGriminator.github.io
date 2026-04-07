@@ -4,56 +4,100 @@
   <meta charset="UTF-8">
   <title>TheGriminator's Cool Site</title>
   <style>
-    /* Background & font */
     body {
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #ffffff;
+      color: #fff;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
       margin: 0;
       padding: 0;
     }
-
-    /* Big title */
-    h1 {
-      font-size: 3em;
-      margin-top: 80px;
-      text-shadow: 2px 2px 8px #000;
-    }
-
-    /* Cool button style */
+    h1 { margin-top: 50px; font-size: 3em; text-shadow: 2px 2px 8px #000; }
     .button {
       display: inline-block;
       background-color: #ff4b2b;
       background-image: linear-gradient(to right, #ff416c, #ff4b2b);
       border: none;
       color: white;
-      padding: 20px 40px;
-      font-size: 1.5em;
-      margin: 40px 20px;
+      padding: 15px 35px;
+      font-size: 1.2em;
+      margin: 15px;
       cursor: pointer;
       border-radius: 15px;
       transition: 0.3s;
       text-decoration: none;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
+    .button:hover { transform: scale(1.1); box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
 
-    .button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    }
-
-    /* Footer text */
-    p {
-      margin-top: 60px;
-      font-size: 1em;
-      color: #aaa;
-    }
+    .login-form, .admin-area { margin-top: 30px; }
+    input, textarea { padding: 10px; margin: 10px; border-radius: 8px; border: none; font-size: 1em; }
+    textarea { resize: none; }
+    #comics { margin-top: 30px; text-align: left; display: inline-block; max-width: 600px; }
+    #comics h3 { margin: 5px 0; }
+    p { color: #aaa; margin-top: 60px; }
   </style>
 </head>
 <body>
-  <h1>TheGriminator's Hangout</h1>
-  <a class="button" href="https://discord.com/users/YOURDISCORDID" target="_blank">Join my Discord</a>
-  <p>Made by TheGriminator — stay awesome!</p>
+
+<h1>TheGriminator's Hangout</h1>
+
+<a class="button" href="https://discord.com/users/YOURDISCORDID" target="_blank">Join my Discord</a>
+
+<!-- Login Form -->
+<div class="login-form" id="loginDiv">
+  <h2>Login</h2>
+  <input type="text" id="username" placeholder="Username"><br>
+  <input type="password" id="password" placeholder="Password"><br>
+  <button class="button" onclick="login()">Login</button>
+  <p id="loginMessage"></p>
+</div>
+
+<!-- Admin Comic Editor -->
+<div class="admin-area" id="adminDiv" style="display:none;">
+  <h2>Add Your Comic</h2>
+  <input type="text" id="comicTitle" placeholder="Comic Title"><br>
+  <textarea id="comicContent" placeholder="Comic content" rows="4" cols="40"></textarea><br>
+  <button class="button" onclick="addComic()">Add Comic</button>
+  <div id="comics"></div>
+</div>
+
+<p>Made by TheGriminator — stay awesome!</p>
+
+<script>
+  // Predefined accounts (like Scratch logic)
+  const accounts = [
+    {user: "Arush", pass: "mypassword123"},
+    {user: "Friend1", pass: "password1"}
+  ];
+
+  function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const match = accounts.find(acc => acc.user === username && acc.pass === password);
+
+    if(match){
+      document.getElementById('loginMessage').innerText = "Login successful!";
+      document.getElementById('loginDiv').style.display = 'none';
+      document.getElementById('adminDiv').style.display = 'block';
+    } else {
+      document.getElementById('loginMessage').innerText = "Wrong username or password!";
+      document.getElementById('adminDiv').style.display = 'none';
+    }
+  }
+
+  function addComic() {
+    const title = document.getElementById('comicTitle').value;
+    const content = document.getElementById('comicContent').value;
+    if(title && content){
+      const div = document.createElement('div');
+      div.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
+      document.getElementById('comics').appendChild(div);
+      document.getElementById('comicTitle').value = '';
+      document.getElementById('comicContent').value = '';
+    }
+  }
+</script>
+
 </body>
 </html>
