@@ -66,6 +66,43 @@
   const addBtn = document.getElementById('addComicBtn');
   const comicList = document.getElementById('comics');
 
+  // Load saved comics from localStorage on page load
+  const savedComics = JSON.parse(localStorage.getItem('comics')) || [];
+  savedComics.forEach(c => renderComic(c.title, c.content));
+
+  addBtn.addEventListener('click', () => {
+    const title = document.getElementById('comicTitle').value.trim();
+    const content = document.getElementById('comicContent').value.trim();
+    if(title && content){
+      renderComic(title, content);
+
+      // Save comic in localStorage
+      savedComics.push({title, content});
+      localStorage.setItem('comics', JSON.stringify(savedComics));
+
+      // Clear inputs
+      document.getElementById('comicTitle').value = '';
+      document.getElementById('comicContent').value = '';
+    } else {
+      alert('You need to enter a title AND content!');
+    }
+  });
+
+  function renderComic(title, content){
+    const div = document.createElement('div');
+    div.style.background = 'rgba(255,255,255,0.05)';
+    div.style.padding = '10px';
+    div.style.margin = '10px';
+    div.style.borderRadius = '8px';
+    div.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
+    comicList.appendChild(div);
+  }
+</script>
+
+<script>
+  const addBtn = document.getElementById('addComicBtn');
+  const comicList = document.getElementById('comics');
+
   addBtn.addEventListener('click', () => {
     const title = document.getElementById('comicTitle').value.trim();
     const content = document.getElementById('comicContent').value.trim();
